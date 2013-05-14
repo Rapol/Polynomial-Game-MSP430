@@ -128,7 +128,7 @@ Next4		cmp	#2,R6			; Check if random number is 2
 		jnz	Next5
 		mov.w	X2,R9			; Save the address of the first coeficient 
 		jmp	Out1
-Next5		mov.w	X3,R9			; by default is X3
+Next5		mov.w	X3,R9			; by default is X3   
 
 ;---X value is located in R9 and the address of the polynomial in R5----
 ;-------------------------------------------------------------------------
@@ -155,33 +155,22 @@ Continue	Mult	R4,R9			; Mult the first coeficient with X
 		bis.b	#01000000b,P1OUT	; Player Wins, green LED on
 		mov	#0,R6			; Initialize R6
 		mov.w	R4,R5			; Copy result in R5
+		mov.w	#0,R8
+Roll		cmp	#8,R8			; Roll the most significant bit of R5 to R6
+		jz	OrganizeR5		; This will extract MSB from R5 to R6
 		clrc
-		rla	R5			; Extract MSB from R5 to R6
+		rla	R5		
 		rlc	R6
-		rla	R5
-		rlc	R6
-		rla	R5
-		rlc	R6
-		rla	R5
-		rlc	R6
-		rla	R5
-		rlc	R6
-		rla	R5
-		rlc	R6
-		rla	R5
-		rlc	R6
-		rla	R5
-		rlc	R6
-	
-		rra	R5			; Reorganize R5 with LSB 
-		rra	R5
-		rra	R5
-		rra	R5
-		rra	R5
-		rra	R5
-		rra	R5
-		rra	R5
-		bis.b	R5,P2OUT		; Copy LSB in Port 2, LEDs in BreadBoard will show the LSB
+		inc	R8
+		jmp	Roll
+OrganizeR5	mov 	#0,R8
+Again		cmp	#8,R8			; Reorganize R5 with LSB 
+		jz	FlashMSB
+		clrc
+		rra	R5	
+		inc	R8
+		jmp	Again		
+FlashMSB	bis.b	R5,P2OUT		; Copy LSB in Port 2, LEDs in BreadBoard will show the LSB
 		Delay2	#50000			; Delay 
 		Delay2	#50000			; This delay will give us time to write down the LSB
 		Delay2	#50000
@@ -190,8 +179,8 @@ Continue	Mult	R4,R9			; Mult the first coeficient with X
 		Delay2	#50000
 		Delay2	#50000
 		bic.b	#0xFF,P2OUT		; Turn off LEDs
-		Delay2	#30000	
-		bis.b	R6,P2OUT		; Copy MSB in Port 2, LEDs in BreadBoard will show the LSB
+		Delay2	#30000			; Delay
+		bis.b	R6,P2OUT		; Copy MSB in Port 2, LEDs in BreadBoard will show the MSB
 		jmp	$
 		
 ;---------------------Player Loses--------------------------
