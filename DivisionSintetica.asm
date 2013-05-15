@@ -43,8 +43,7 @@ Par:	clrc				; make sure that the rrc roll zeros
 Finish:	cmp	#1,R12			; Loop finised, if there was one negative invert 
 	jnz	end			; else finish
 	inv	R15			; Result needs to be negative
-	add.w	#1,R15			; 2's complement of R4
-	jmp	end			
+	add.w	#1,R15			; 2's complement of R4		
 end:	bit.w	#08000h,R15		; testing the result for overflow
 	jn	Neg		
 	jz	Pos
@@ -183,7 +182,7 @@ FlashMSB	bis.b	R5,P2OUT		; Copy LSB in Port 2, LEDs in BreadBoard will show the 
 		bis.b	R6,P2OUT		; Copy MSB in Port 2, LEDs in BreadBoard will show the MSB
 		jmp	$
 		
-;---------------------Player Loses--------------------------
+;---------------------Player Loses------------------------------
 Lose		bis.b	#00000001b,P1OUT	; Player Loses, red LED on
 		jmp	$
 
@@ -191,12 +190,12 @@ Lose		bis.b	#00000001b,P1OUT	; Player Loses, red LED on
 ;		Helper Method For Negatives
 ;---------------------------------------------------------------
 Helper		bit.w	#1000000000000000b,R13	; Checking sign of R13
-		jz	Check2			; if negative R13 return from subroutine
+		jz	Check2			; if postive R13 check other number
 		inv	R13			; else invert
 		add.w	#1,R13			; 2's complement of R13
 		add.w	#1,R12			; Counter for negatives
 Check2		bit.w	#1000000000000000b,R14	; Checking sign of R9
-		jz	Return			; if negative R9=positive Return from subroutine
+		jz	Return			; if positive return from subroutine
 		inv	R14			
 		add.w	#1,R14			; 2's complement of R9
 		add.w	#1,R12			; Counter for negatives
