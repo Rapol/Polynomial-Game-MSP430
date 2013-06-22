@@ -1,4 +1,30 @@
-#include "msp430.h"	
+#include "msp430.h"
+;*******************POLYNOMIAL RANDOM GAME**************************
+;* HARDWARE NEEDED FOR PLAYING THE GAME:
+;* 	1) BREADBOARD
+;* 	2) WIRES
+;* 	3) 8 LEDS
+;* LEDS WILL BE CONNECTED FROM PORT 2.0 TO 2.7 (For each port one LED)
+;* 
+;* About game:
+;*	Polynomials:
+;*		P0(x) = 25x3 − 2x2 + 102x + 5
+;*		P1(x) = −9x3 + 6x2 − 13x + 15
+;*		P2(x) = x3 + 25x2 − 6x + 7
+;*		P3(x) = 4x3 + 106x2 − 110x + 87
+;*	Values:
+;*		x0 = 12, x1 = −10, x2 = −15, and x3 = −30
+;* The LEDs are ﬂashing together. When the player pushes-and-releases the push button,
+;* the LED’s turn oﬀ and the microcontroller evaluates the polynomial value Ph(xj), where h
+;* and j are randomly selected. The polynomial evaluation is done using synthetic division. 
+;* The result should be within −32,768 and 32,767. If it falls outside this range, then the red LED 
+;* of the PCB is turned on and the player eliminated. If the evaluation is correct, then the green LED of
+;* the PCB is turned on and the hex result will be read with the LED’s you added.
+;* Since only eight LEDs are being used, ﬁrst show the LSB. Then show the MSB and complete the evaluation.
+;* Push the button again, and all LEDs should be turned oﬀ, including that in the launchpad PCB. Another game 
+;* can be started by pressing the RESET push button.
+;*******************POLYNOMIAL RANDOM GAME**************************
+
 Delay2	MACRO	dato
 	LOCAL	Loop1
 	mov.w	dato,R10
