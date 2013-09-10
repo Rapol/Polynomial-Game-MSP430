@@ -4,7 +4,9 @@
 ;* 	1) BREADBOARD
 ;* 	2) WIRES
 ;* 	3) 8 LEDS
-;* LEDS WILL BE CONNECTED FROM PORT 2.0 TO 2.7 (For each port one LED)
+;*	4) 8 RESITORS 15 Ohms
+;* LEDS WILL BE CONNECTED FROM PORT 2.0 TO 2.5 AND THE LAST TWO IN XOUT AND XIN (For each port one LED and one resitor in series) 
+;* Layout of leds from right to left(2.0-2.5,Xin-Xout). LSB=2.0
 ;* 
 ;* About game:
 ;*	Polynomials:
